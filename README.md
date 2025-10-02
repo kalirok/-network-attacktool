@@ -1,4 +1,4 @@
-# 🚀 Network Attacktool - 网络攻击渗透测试工具集
+# 🚀 Network Attacktool - 网络安全渗透测试套件
 
 <div align="center">
 
@@ -22,6 +22,7 @@
 - 📊 **实时监控**: 攻击状态实时显示和监控
 - 🛡️ **安全退出**: 完善的异常处理和资源清理机制
 - 🌐 **多协议支持**: 支持ARP、DHCP、DNS、ICMP等多种协议
+- 🤖 **AI助手**: 集成Moonshot AI API，提供实时帮助和攻击建议
 
 ---
 
@@ -30,12 +31,14 @@
 ```
 network-Attacktool/
 ├── 📄 netattack.py              # 主程序 - 集成所有工具
+├── 🤖 ai_assistant.py           # AI助手模块
 ├── 🔧 arp_spoof_advanced.py      # ARP欺骗攻击模块
 ├── 🌐 dhcp_starvation.py         # DHCP饥饿攻击模块
 ├── 🔍 dns_spoof.py               # DNS欺骗攻击模块
 ├── ⚡ icmp_amplification.py      # ICMP放大攻击模块
 ├── 🌊 mac_flood.py               # MAC洪泛攻击模块
 ├── 📶 wifi_password_cracker.py   # WiFi密码破解模块
+├── 🧪 test_ai_assistant.py       # AI助手测试脚本
 └── 📁 __pycache__/              # Python缓存文件
 ```
 
@@ -187,6 +190,41 @@ python3 netattack.py
 python3 netattack.py
 # 选择B → 选择扫描或破解模式
 ```
+
+---
+
+### 7. 🤖 AI助手 (`ai_assistant.py`)
+
+**功能描述**: 集成Moonshot AI API，为网络安全攻击提供实时AI帮助、策略建议和风险评估。
+
+#### 🔧 功能特性：
+- ✅ **多AI提供商支持**: 支持Moonshot、OpenAI、DeepSeek等
+- ✅ **实时帮助**: 在攻击过程中提供实时指导
+- ✅ **攻击建议**: 针对不同攻击类型提供专业建议
+- ✅ **风险分析**: 分析攻击风险并提供缓解措施
+- ✅ **聊天模式**: 与AI助手进行自然语言对话
+
+#### 📋 使用场景：
+- 学习网络安全技术
+- 获取攻击策略指导
+- 评估攻击风险
+- 解决技术问题
+
+#### 🚀 命令示例：
+```bash
+python3 netattack.py
+# 选择D → 进入AI助手模式
+# 选择1 → 与AI聊天
+# 选择2 → 获取攻击建议
+# 选择3 → 风险分析
+# 选择4 → 配置AI设置
+```
+
+#### 🔧 AI助手配置：
+1. 在主菜单中选择 `D` 进入AI助手
+2. 选择 `4` 进入配置界面
+3. 设置API密钥和启用状态
+4. 选择AI提供商（默认Moonshot）
 
 ---
 
