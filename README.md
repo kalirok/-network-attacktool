@@ -223,7 +223,7 @@ python3 netattack.py
 
 1. **克隆仓库**
 ```bash
-git clone https://github.com/your-username/network-attacktool.git
+git clone https://github.com/kalirok/-network-attacktool.git
 cd network-attacktool
 ```
 
@@ -329,7 +329,7 @@ class NetworkDiagnosis:        # 网络诊断
 
 如有问题或建议，请通过以下方式联系：
 
-- 📧 **邮箱**: your-email@example.com
+- 📧 **邮箱**: 3993053612@qq.com
 - 💬 **Issues**: [GitHub Issues](https://github.com/your-username/network-attacktool/issues)
 - 📚 **文档**: 本项目文档
 
