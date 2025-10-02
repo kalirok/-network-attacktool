@@ -1,4 +1,4 @@
-# 🚀 Network Attacktool AI - 网络安全渗透测试套件
+# 🚀 Network Attacktool - 网络安全渗透测试套件
 
 <div align="center">
 
@@ -8,6 +8,13 @@
 ![Version](https://img.shields.io/badge/Version-3.0.0-orange.svg)
 
 ✨ **专业级网络安全渗透测试工具集合** ✨
+
+---
+
+## 🌐 多语言支持
+
+- 🇨🇳 **中文文档** (当前文档)
+- 🇺🇸 **[English Documentation](README_EN.md)**
 
 </div>
 
@@ -376,6 +383,13 @@ class NetworkDiagnosis:        # 网络诊断
 ## ⭐ 致谢
 
 感谢所有为网络安全事业贡献的开发者！
+
+---
+
+## 🌍 多语言支持
+
+- 🇨🇳 [中文文档](README.md) - 当前文档
+- 🇺🇸 [English Documentation](README_EN.md) - English version
 
 ---
 
