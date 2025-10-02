@@ -13,6 +13,7 @@ import re
 import subprocess
 import os
 import shutil
+from ai_assistant import create_ai_assistant, create_ai_interface
 
 class Color:
     """🎨 高级颜色代码类 - 支持RGB渐变和动画效果"""
@@ -635,6 +636,10 @@ class LANAttackSuite:
         self.network_diagnosis = NetworkDiagnosis()
         self.running = True
         
+        # 初始化AI助手
+        self.ai_assistant = create_ai_assistant()
+        self.ai_interface = create_ai_interface(self.ai_assistant)
+        
         # 初始化攻击工具实例
         try:
             from arp_spoof_advanced import ARPSpoofAdvanced
@@ -810,7 +815,7 @@ class LANAttackSuite:
             ("4", "⚡ ICMP放大攻击", "9", "📡 局域网设备扫描"),
             ("5", "🌐 DNS欺骗攻击", "A", "🔎 MAC地址查询"),
             ("B", "📶 WiFi密码破解", "C", "⚙️  配置管理"),
-            ("", "", "0", "🚪 安全退出")
+            ("D", "🤖 AI助手", "0", "🚪 安全退出")
         ]
         
         # 计算列宽
@@ -886,11 +891,25 @@ class LANAttackSuite:
             interface = input(f"{Color.rgb(138, 43, 226)}🔌 请输入网络接口: {Color.END}").strip()
             sniff_choice = input(f"{Color.rgb(255, 215, 0)}👃 启用数据包嗅探? (y/n): {Color.END}").strip().lower()
             
+            # AI实时帮助
+            if self.ai_assistant.enabled:
+                self.arp_spoof_tool.real_time_ai_help("starting")
+            
             def arp_attack():
                 self.arp_spoof_tool.start_attack([target_ip], gateway_ip, interface, sniff_choice == 'y')
             
             self.attack_manager.start_attack("🎯 ARP欺骗", arp_attack)
+            
+            # AI实时帮助
+            if self.ai_assistant.enabled:
+                self.arp_spoof_tool.real_time_ai_help("attacking")
+            
             input(f"{Color.rgb(255, 105, 180)}⏹️  按回车键停止攻击...{Color.END}")
+            
+            # AI实时帮助
+            if self.ai_assistant.enabled:
+                self.arp_spoof_tool.real_time_ai_help("recovery")
+            
             self.attack_manager.stop_attack("🎯 ARP欺骗", self)
         elif choice == '3':
             targets_input = input(f"{Color.rgb(255, 69, 0)}🎯 请输入目标IP列表 (用空格分隔): {Color.END}").strip()
@@ -899,12 +918,26 @@ class LANAttackSuite:
             interface = input(f"{Color.rgb(138, 43, 226)}🔌 请输入网络接口: {Color.END}").strip()
             sniff_choice = input(f"{Color.rgb(255, 215, 0)}👃 启用数据包嗅探? (y/n): {Color.END}").strip().lower()
             
+            # AI实时帮助
+            if self.ai_assistant.enabled:
+                self.arp_spoof_tool.real_time_ai_help("starting")
+            
             def arp_attack():
                 self.arp_spoof_tool.start_attack(target_ips, gateway_ip, interface, sniff_choice == 'y')
             
             self.attack_manager.start_attack("🎯 ARP欺骗", arp_attack)
+            
+            # AI实时帮助
+            if self.ai_assistant.enabled:
+                self.arp_spoof_tool.real_time_ai_help("attacking")
+            
             input(f"{Color.rgb(255, 105, 180)}⏹️  按回车键停止攻击...{Color.END}")
-            self.attack_manager.stop_attack("🎯 ARP欺骗")
+            
+            # AI实时帮助
+            if self.ai_assistant.enabled:
+                self.arp_spoof_tool.real_time_ai_help("recovery")
+            
+            self.attack_manager.stop_attack("🎯 ARP欺骗", self)
         elif choice == '4':
             diag_ip = input(f"{Color.YELLOW}请输入要诊断的IP地址 (留空使用默认网关): {Color.END}").strip()
             if not diag_ip:
@@ -1250,6 +1283,90 @@ class LANAttackSuite:
             mac = NetworkUtils.get_mac_address(ip)
             Logger.success(f"IP地址 {Color.CYAN}{ip}{Color.END} 的MAC地址: {Color.GREEN}{mac}{Color.END}")
     
+    def handle_ai_assistant(self):
+        """处理AI助手功能"""
+        Logger.info("AI助手功能")
+        Logger.banner("🤖 AI网络安全助手")
+        
+        self.ai_interface.show_welcome()
+        
+        while True:
+            # 美化子菜单
+            submenu_options = [
+                ("1", "💬 与AI聊天"),
+                ("2", "🎯 获取攻击建议"),
+                ("3", "📊 风险分析"),
+                ("4", "⚙️  AI配置"),
+                ("5", "🔙 返回主菜单")
+            ]
+            
+            print(f"\n{Color.rgb(255, 215, 0)}请选择操作:{Color.END}\n")
+            for opt in submenu_options:
+                print(f"  {Color.YELLOW}{opt[0]}.{Color.END} {Color.CYAN}{opt[1]}{Color.END}")
+            
+            choice = input(f"\n{Color.rgb(255, 105, 180)}🤖 请输入选择: {Color.END}").strip()
+            
+            if choice == '1':
+                self.ai_interface.chat_interface()
+            elif choice == '2':
+                self._handle_attack_advice()
+            elif choice == '3':
+                self._handle_risk_analysis()
+            elif choice == '4':
+                self.ai_interface.config_interface()
+            elif choice == '5':
+                break
+            else:
+                Logger.warning("无效的选择")
+    
+    def _handle_attack_advice(self):
+        """处理攻击建议"""
+        attack_types = {
+            '1': 'arp_spoof',
+            '2': 'dhcp_starvation', 
+            '3': 'mac_flood',
+            '4': 'dns_spoof',
+            '5': 'icmp_amplification',
+            '6': 'wifi_cracking'
+        }
+        
+        print(f"\n{Color.rgb(255, 215, 0)}请选择攻击类型:{Color.END}\n")
+        for key, value in attack_types.items():
+            print(f"  {Color.YELLOW}{key}.{Color.END} {Color.CYAN}{value}{Color.END}")
+        
+        choice = input(f"\n{Color.rgb(255, 105, 180)}🎯 请输入选择: {Color.END}").strip()
+        
+        if choice in attack_types:
+            self.ai_interface.show_attack_advice(attack_types[choice])
+        else:
+            Logger.warning("无效的选择")
+    
+    def _handle_risk_analysis(self):
+        """处理风险分析"""
+        attack_types = {
+            '1': 'arp_spoof',
+            '2': 'dhcp_starvation',
+            '3': 'mac_flood',
+            '4': 'dns_spoof',
+            '5': 'icmp_amplification',
+            '6': 'wifi_cracking'
+        }
+        
+        print(f"\n{Color.rgb(255, 215, 0)}请选择攻击类型:{Color.END}\n")
+        for key, value in attack_types.items():
+            print(f"  {Color.YELLOW}{key}.{Color.END} {Color.CYAN}{value}{Color.END}")
+        
+        choice = input(f"\n{Color.rgb(255, 105, 180)}📊 请输入选择: {Color.END}").strip()
+        
+        if choice in attack_types:
+            target_info = {}
+            env_choice = input(f"{Color.rgb(255, 215, 0)}🎯 是否为生产环境? (y/n): {Color.END}").strip().lower()
+            if env_choice == 'y':
+                target_info['production_environment'] = True
+            self.ai_interface.show_risk_analysis(attack_types[choice], target_info)
+        else:
+            Logger.warning("无效的选择")
+    
     def handle_config_management(self):
         """处理配置管理"""
         Logger.info("配置管理功能")
@@ -1347,6 +1464,8 @@ class LANAttackSuite:
                     self.handle_mac_query()
                 elif choice.lower() == 'c':
                     self.handle_config_management()
+                elif choice.lower() == 'd':
+                    self.handle_ai_assistant()
                 elif choice == '0':
                     Logger.info("正在安全退出...")
                     self.attack_manager.stop_all_attacks(self)
